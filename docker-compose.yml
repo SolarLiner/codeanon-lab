@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  hub:
+    build: jupyterhub
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      DOCKER_JUPYTER_IMAGE: jupyterlab_img
+      DOCKER_NETWORK_NAME: jupyter_default
+      HUB_IP: jupyter_hub
+    deploy:
+      labels:
+        traefik.http.routers.hub.rule: 'Host(`lab.codeanon.org`)'
+        traefik.http.routers.hub.tls: 'true'
+        traefik.http.routers.hub.tls.certResolver: 'letsencrypt'
+        traefik.http.services.hub.loadbalancer.server.port: '8000'
