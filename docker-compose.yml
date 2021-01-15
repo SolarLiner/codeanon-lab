@@ -6,7 +6,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      DOCKER_JUPYTER_IMAGE: jupyterlab_img
+      DOCKER_JUPYTER_IMAGE: jupyterlab/scipy-notebook
       DOCKER_NETWORK_NAME: jupyter_default
       HUB_IP: jupyter_hub
     deploy:
@@ -15,3 +15,7 @@ services:
         traefik.http.routers.hub.tls: 'true'
         traefik.http.routers.hub.tls.certResolver: 'letsencrypt'
         traefik.http.services.hub.loadbalancer.server.port: '8000'
+  lab:
+    image: jupyterlab/scipy-notebook
+    command: echo
+    
